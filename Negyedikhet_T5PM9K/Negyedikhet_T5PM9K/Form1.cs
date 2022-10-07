@@ -113,6 +113,18 @@ namespace Negyedikhet_T5PM9K
             headerRange.Interior.Color = Color.LightBlue;
             headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
 
+            int lastRowID = xlSheet.UsedRange.Rows.Count;
+
+            Excel.Range teljesRange = xlSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, headers.Length));
+            teljesRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range elsooszlopRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
+            elsooszlopRange.Font.Bold = true;
+            elsooszlopRange.Interior.Color = Color.LightYellow;
+
+            Excel.Range utolsooszlopRange = xlSheet.get_Range(GetCell(2, headers.Length), GetCell(lastRowID, headers.Length));
+            utolsooszlopRange.Interior.Color = Color.LightGreen;
+            utolsooszlopRange.NumberFormat = "0.00";
         }
 
         private string GetCell(int x, int y)
