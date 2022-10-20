@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Hatodikhet_T5PM9K
 {
@@ -19,8 +20,10 @@ namespace Hatodikhet_T5PM9K
             InitializeComponent();
             Webszolgaltatashivas();
             dataGridView1.DataSource = Rates;
+            XMLFeldolgozas();
         }
-        private void Webszolgaltatashivas()
+
+        private string Webszolgaltatashivas()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
             var request = new GetExchangeRatesRequestBody()
@@ -32,6 +35,29 @@ namespace Hatodikhet_T5PM9K
 
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
+
+            return result;
+        }
+
+        private void XMLFeldolgozas()
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(Webszolgaltatashivas());
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+                var rate = new Entities.RateData();
+                Rates.Add(rate);
+
+                rate.Date = DateTime.Parse(element.GetAttribute("date"));
+                var childElement = (XmlElement)element.ChildNodes[0];
+                rate.Currency = childElement.GetAttribute("curr");
+                var unit = decimal.Parse(childElement.GetAttribute("unit"));
+                var value = decimal.Parse(childElement.InnerText);
+                if (unit != 0)
+                {
+                    rate.Value = value / unit;
+                }
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Hatodikhet_T5PM9K
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(733, 379);
+            this.dataGridView1.Size = new System.Drawing.Size(573, 379);
             this.dataGridView1.TabIndex = 0;
             // 
             // Form1
