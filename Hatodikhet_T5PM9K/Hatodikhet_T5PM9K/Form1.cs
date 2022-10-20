@@ -13,10 +13,12 @@ namespace Hatodikhet_T5PM9K
 {
     public partial class Form1 : Form
     {
+        private BindingList<Entities.RateData> Rates = new BindingList<Entities.RateData>();
         public Form1()
         {
             InitializeComponent();
             Webszolgaltatashivas();
+            dataGridView1.DataSource = Rates;
         }
         private void Webszolgaltatashivas()
         {
