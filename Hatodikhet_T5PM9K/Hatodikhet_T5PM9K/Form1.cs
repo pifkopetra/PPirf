@@ -16,9 +16,12 @@ namespace Hatodikhet_T5PM9K
     public partial class Form1 : Form
     {
         private BindingList<Entities.RateData> Rates = new BindingList<Entities.RateData>();
+        private BindingList<string> Currencies = new BindingList<string>();
         public Form1()
         {
             InitializeComponent();
+            //GetCurrencies();
+            //XMLFeldolgozas2();
             RefreshData();
         }
 
@@ -27,6 +30,7 @@ namespace Hatodikhet_T5PM9K
             Rates.Clear();
             Webszolgaltatashivas();
             dataGridView1.DataSource = Rates;
+            //comboBox1.DataSource = Currencies;
             XMLFeldolgozas();
             Megjelenites();
         }
@@ -100,5 +104,22 @@ namespace Hatodikhet_T5PM9K
         {
             RefreshData();
         }
+
+        /*private string GetCurrencies()
+        {
+            var mnbService2 = new MNBArfolyamServiceSoapClient();
+            var request2 = new GetCurrenciesRequestBody();
+
+            var response2 = mnbService2.GetCurrencies(request2);
+            var result2 = response2.GetCurrenciesResult;
+
+            return result2;
+        }
+
+        private void XMLFeldolgozas2()
+        {
+            var xml2 = new XmlDocument();
+            xml2.LoadXml(GetCurrencies());
+        }*/
     }
 }
