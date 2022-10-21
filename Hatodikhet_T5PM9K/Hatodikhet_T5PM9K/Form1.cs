@@ -20,8 +20,7 @@ namespace Hatodikhet_T5PM9K
         public Form1()
         {
             InitializeComponent();
-            //GetCurrencies();
-            //XMLFeldolgozas2();
+            GetCurrencies();
             RefreshData();
         }
 
@@ -30,7 +29,7 @@ namespace Hatodikhet_T5PM9K
             Rates.Clear();
             Webszolgaltatashivas();
             dataGridView1.DataSource = Rates;
-            //comboBox1.DataSource = Currencies;
+            comboBox1.DataSource = Currencies;
             XMLFeldolgozas();
             Megjelenites();
         }
@@ -62,6 +61,10 @@ namespace Hatodikhet_T5PM9K
 
                 rate.Date = DateTime.Parse(element.GetAttribute("date"));
                 var childElement = (XmlElement)element.ChildNodes[0];
+                if (childElement == null)
+                {
+                    continue;
+                }
                 rate.Currency = childElement.GetAttribute("curr");
                 var unit = decimal.Parse(childElement.GetAttribute("unit"));
                 var value = decimal.Parse(childElement.InnerText);
@@ -105,21 +108,24 @@ namespace Hatodikhet_T5PM9K
             RefreshData();
         }
 
-        /*private string GetCurrencies()
+        private void GetCurrencies()
         {
             var mnbService2 = new MNBArfolyamServiceSoapClient();
             var request2 = new GetCurrenciesRequestBody();
-
             var response2 = mnbService2.GetCurrencies(request2);
             var result2 = response2.GetCurrenciesResult;
 
-            return result2;
+            var xml2 = new XmlDocument();
+            xml2.LoadXml(result2);
+            foreach (XmlElement element in xml2.DocumentElement)
+            {
+                foreach (var item in element.ChildNodes)
+                {
+                    Currencies.Add(((XmlElement)item).InnerText);
+                }
+            }
+            
         }
 
-        private void XMLFeldolgozas2()
-        {
-            var xml2 = new XmlDocument();
-            xml2.LoadXml(GetCurrencies());
-        }*/
     }
 }
