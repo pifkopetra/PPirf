@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Hetedikhet_T5PM9K.Entities
 {
-    public class BallFactory : Abstractions.IToyFactory
+    public class CarFactory : Abstractions.IToyFactory
     {
         public Toy CreateNew()
         {
-            return new Ball();
+            return new Car();
         }
     }
 }
