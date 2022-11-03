@@ -68,7 +68,10 @@ namespace Hetedikhet_T5PM9K
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Factory = new Entities.BallFactory();
+            Factory = new Entities.BallFactory
+            {
+                BallColor = button3.BackColor
+            };
         }
 
         private void DisplayNext()
