@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Hetedikhet_T5PM9K.Entities
 {
-    class Ball : Label
+    public class Ball : Label
     {
         public Ball()
         {
