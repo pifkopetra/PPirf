@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Nyolcadikhet_T5PM9K
         PortfolioEntities context = new PortfolioEntities();
 
         List<Entities.PortfolioItem> Portfolio = new List<Entities.PortfolioItem>();
+        List<decimal> nyeresegekRendezve;
         public Form1()
         {
             InitializeComponent();
@@ -35,9 +37,9 @@ namespace Nyolcadikhet_T5PM9K
                 Nyereségek.Add(ny);
                 Console.WriteLine(i + " " + ny);
             }
-            var nyeresegekRendezve = (from x in Nyereségek
-                                      orderby x
-                                      select x).ToList();
+            nyeresegekRendezve = (from x in Nyereségek
+                                  orderby x
+                                  select x).ToList();
             MessageBox.Show(nyeresegekRendezve[nyeresegekRendezve.Count() / 5].ToString());
 
         }
@@ -62,6 +64,30 @@ namespace Nyolcadikhet_T5PM9K
                 value += (decimal)last.Price * item.Volume;
             }
             return value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                sw.WriteLine("Időszak Nyereség");
+                int sorszam = 1;
+                foreach (var item in nyeresegekRendezve)
+                {
+                    sw.Write(sorszam);
+                    sw.Write(";");
+                    sw.Write(item);
+                    sw.WriteLine();
+                    sorszam++;
+                }
+                
+            }
         }
     }
 }
