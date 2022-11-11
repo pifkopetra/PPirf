@@ -14,11 +14,22 @@ namespace Nyolcadikhet_T5PM9K
     {
         List<Tick> Ticks;
         PortfolioEntities context = new PortfolioEntities();
+
+        List<Entities.PortfolioItem> Portfolio = new List<Entities.PortfolioItem>();
         public Form1()
         {
             InitializeComponent();
             Ticks = context.Ticks.ToList();
             dataGridView1.DataSource = Ticks;
+            CreatePortfolio();
+        }
+
+        private void CreatePortfolio()
+        {
+            Portfolio.Add(new Entities.PortfolioItem() { Index = "OTP", Volume = 10 });
+            Portfolio.Add(new Entities.PortfolioItem() { Index = "ZWACK", Volume = 10 });
+            Portfolio.Add(new Entities.PortfolioItem() { Index = "ELMU", Volume = 10 });
+            dataGridView2.DataSource = Portfolio;
         }
     }
 }
