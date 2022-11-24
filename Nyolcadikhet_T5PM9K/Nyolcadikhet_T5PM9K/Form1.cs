@@ -37,7 +37,7 @@ namespace Nyolcadikhet_T5PM9K
                 Nyereségek.Add(ny);
                 Console.WriteLine(i + " " + ny);
             }
-            nyeresegekRendezve = (from x in Nyereségek
+            var nyeresegekRendezve = (from x in Nyereségek
                                   orderby x
                                   select x).ToList();
             MessageBox.Show(nyeresegekRendezve[nyeresegekRendezve.Count() / 5].ToString());
