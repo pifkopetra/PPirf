@@ -17,6 +17,8 @@ namespace Tizenegyedikhet_T5PM9K
         List<Person> Population = new List<Person>();
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
+
+        Random rng = new Random(824);
         public Form1()
         {
             InitializeComponent();
