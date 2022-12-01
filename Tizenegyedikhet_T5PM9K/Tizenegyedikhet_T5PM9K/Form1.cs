@@ -18,6 +18,9 @@ namespace Tizenegyedikhet_T5PM9K
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
 
+        List<int> Male = new List<int>();
+        List<int> Female = new List<int>();
+
         Random rng = new Random(1234);
         public Form1()
         {
@@ -26,8 +29,12 @@ namespace Tizenegyedikhet_T5PM9K
             Population = GetPopulation(@"C:\Temp\nép.csv");
             BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
             DeathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");
+           
+        }
 
-            for (int year = 2005; year <= 2024; year++)
+        private void Simulation()
+        {
+            for (int year = 2005; year <= numericUpDown1.Value; year++)
             {
                 for (int i = 0; i < Population.Count; i++)
                 {
@@ -40,7 +47,11 @@ namespace Tizenegyedikhet_T5PM9K
                 int nbrOfFemales = (from x in Population
                                     where x.Gender == Gender.Female && x.IsAlive
                                     select x).Count();
-                Console.WriteLine(string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
+
+                Male.Add(nbrOfMales);
+                Female.Add(nbrOfFemales);
+
+                //Console.WriteLine(string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
             }
         }
 
@@ -128,6 +139,34 @@ namespace Tizenegyedikhet_T5PM9K
                     ujszulott.Gender = (Gender)(rng.Next(1, 3));
                     Population.Add(ujszulott);
                 }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+            Male.Clear();
+            Female.Clear();
+            Simulation();
+            DisplayResults();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            textBox1.Text = ofd.FileName;
+        }
+
+        private void DisplayResults()
+        {
+            for (int i = 2005; i < numericUpDown1.Value; i++)
+            {
+                string line = $"Szimulációs év: {i}\n\tFiúk:{Male[i - 2005]}\n\tLányok:{Female[i - 2005]}\n\n";
+                richTextBox1.AppendText(line);
             }
         }
     }
